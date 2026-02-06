@@ -1,4 +1,4 @@
-import { IsEnum, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsString } from 'class-validator';
 import { EnumType } from 'generated/prisma/enums';
 
 export class CategoryDto {
@@ -11,8 +11,8 @@ export class CategoryDto {
   @IsString()
   color: string;
 
-  @IsString()
-  userId: string;
+  @IsNumber()
+  userId: number;
 
   @IsString()
   icon: string;

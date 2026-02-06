@@ -7,12 +7,12 @@ export class CategoryService {
   constructor(private readonly prisma: PrismaService) {}
 
   async getAll(userId: number) {
-    return this.prisma.category.findMany({ where: { userId } });
+    return this.prisma.category.findMany({ where: { userId: Number(userId) } });
   }
 
   async getById(id: number, userId: number) {
     const category = await this.prisma.category.findUnique({
-      where: { id: Number(id), userId },
+      where: { id: Number(id), userId: Number(userId) },
     });
 
     if (!category) {
@@ -23,19 +23,21 @@ export class CategoryService {
   }
 
   async create(dto: CategoryDto, userId: number) {
-    return this.prisma.category.create({ data: { ...dto, userId } });
+    return this.prisma.category.create({
+      data: { ...dto, userId: Number(userId) },
+    });
   }
 
   async update(dto: CategoryDto, id: number, userId: number) {
     await this.getById(id, userId);
     return this.prisma.category.update({
-      where: { id },
-      data: { ...dto, userId },
+      where: { id: Number(id) },
+      data: { ...dto, userId: Number(userId) },
     });
   }
 
   async delete(id: number, userId: number) {
     await this.getById(id, userId);
-    return this.prisma.category.delete({ where: { id } });
+    return this.prisma.category.delete({ where: { id: Number(id) } });
   }
 }
